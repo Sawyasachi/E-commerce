@@ -3,6 +3,10 @@ package com.samdell.E_Commerce_JEE_Project.controller;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.samdell.E_Commerce_JEE_Project.dao.CustomerDao;
+import com.samdell.E_Commerce_JEE_Project.dao.impl.CustomerDaoImpl;
+import com.samdell.E_Commerce_JEE_Project.entity.Customer;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,6 +19,7 @@ import jakarta.servlet.http.Part;
 @WebServlet("/customerRegister")
 @MultipartConfig
 public class CustomerRegistrationController extends HttpServlet{
+	CustomerDao dao = new CustomerDaoImpl();
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -27,5 +32,20 @@ public class CustomerRegistrationController extends HttpServlet{
 		InputStream stream = image.getInputStream();
 		
 		byte[] image1 = stream.readAllBytes();
+		
+		System.out.println(name);
+		System.out.println(email);
+		System.out.println(password);
+		System.out.println(image1);
+		
+		Customer customer = new Customer(name,email,password,image1);
+		
+		Customer customer1 = dao.saveCustomerDetailDao(customer);
+		
+		if(customer1 != null) {
+			System.out.println("Data saved successfully....");
+		} else {
+			System.out.println("Something went wrong..");
+		}
 	}
 }

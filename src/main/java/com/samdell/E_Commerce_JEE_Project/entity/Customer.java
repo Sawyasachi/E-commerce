@@ -14,5 +14,15 @@ public class Customer {
 	private String customerEmail;
 	private String customerPassword;
 	private byte[] customerImage;
+	
+	public Customer(String customerName, String customerEmail, String customerPassword, byte[] customerImage) {
+		super();
+		this.customerName = customerName;
+		this.customerEmail = customerEmail;
+		this.customerPassword = customerPassword;
+		this.customerImage = customerImage;
+	}
+	
+	
 
 }
