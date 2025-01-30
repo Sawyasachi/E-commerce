@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import com.mysql.cj.jdbc.Driver;
 
 public class ConnectionProvider {
-	
-private static Connection conn = null;
-	
+
+	private static Connection conn = null;
+
 	public static Connection getConnection() {
 
 		try {

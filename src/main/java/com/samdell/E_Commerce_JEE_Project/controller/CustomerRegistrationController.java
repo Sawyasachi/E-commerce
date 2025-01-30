@@ -44,8 +44,11 @@ public class CustomerRegistrationController extends HttpServlet{
 		
 		if(customer1 != null) {
 			System.out.println("Data saved successfully....");
+			req.getRequestDispatcher("customerLogin.jsp").forward(req, resp);
 		} else {
 			System.out.println("Something went wrong..");
+			req.setAttribute("msg", "Check your detail..");
+			req.getRequestDispatcher("customerRegister.jsp").forward(req, resp);
 		}
 	}
 }

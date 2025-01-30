@@ -22,6 +22,12 @@ public class Customer {
 		this.customerPassword = customerPassword;
 		this.customerImage = customerImage;
 	}
+
+	public Customer(String customerEmail, String customerPassword) {
+		super();
+		this.customerEmail = customerEmail;
+		this.customerPassword = customerPassword;
+	}
 	
 	
 

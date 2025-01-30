@@ -5,5 +5,7 @@ import com.samdell.E_Commerce_JEE_Project.entity.Customer;
 public interface CustomerDao {
 	
 	public Customer saveCustomerDetailDao(Customer customer);
+	
+	public Customer getCustomerDetailByEmail(String email);
 
 }

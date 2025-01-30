@@ -26,6 +26,10 @@
 </head>
 <body>
 
+	<%
+		String msg = (String)request.getAttribute("msg");
+	%>
+
 	<section class="vh-100" style="background-color: #2779e2;">
 		<div class="container h-100">
 			<div
@@ -33,6 +37,8 @@
 				<div class="col-xl-9">
 
 					<h1 class="text-white mb-4">Customer Registration</h1>
+					
+					<%if(msg != null) { %><h2><%=msg %></h2><%} %>
 
 					<form action="customerRegister" method="post" enctype="multipart/form-data">
 						
@@ -117,6 +123,10 @@
 			</div>
 		</div>
 	</section>
+	
+	<!-- MDB -->
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.2.0/mdb.umd.min.js"></script>
 
 </body>
 </html>
