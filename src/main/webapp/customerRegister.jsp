@@ -111,7 +111,7 @@
 
 							<div class="px-5 py-4">
 								<button type="submit" data-mdb-button-init data-mdb-ripple-init
-									class="btn btn-primary btn-lg">Send application</button>
+									class="btn btn-primary btn-lg">Register</button>
 							</div>
 
 						</div>
