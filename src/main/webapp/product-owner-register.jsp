@@ -45,8 +45,7 @@
 					}
 					%>
 
-					<form action="productOwnerRegister" method="post"
-						>
+					<form action="productOwnerRegister" method="post">
 
 						<div class="card" style="border-radius: 15px;">
 							<div class="card-body">
@@ -121,7 +120,15 @@
 									<button type="submit" data-mdb-button-init data-mdb-ripple-init
 										class="btn btn-primary btn-lg">Register</button>
 								</div>
-								
+
+								<div class="text-center text-lg-start mt-4 pt-2">
+
+									<p class="large fw-bold mt-2 pt-1 mb-0">
+										Already have an account? <a href="product-owner-login.jsp"
+											class="link-danger">Login</a>
+									</p>
+								</div>
+
 							</div>
 						</div>
 

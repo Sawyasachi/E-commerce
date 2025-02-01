@@ -20,7 +20,7 @@
 
 
 	<%
-		String msg = (String) request.getAttribute("msg");
+	String msg = (String) request.getAttribute("msg");
 	%>
 
 	<section class="vh-100" style="background-color: #508bfc;">
@@ -32,15 +32,20 @@
 						<div class="card-body p-5 text-center">
 
 							<h3 class="mb-5">Sign in</h3>
-							
-							<%if(msg != null) {%><h4><%=msg %></h4><%} %>
+
+							<%
+							if (msg != null) {
+							%><h4><%=msg%></h4>
+							<%
+							}
+							%>
 
 							<form action="loginCustomer" method="post">
 
 								<div data-mdb-input-init class="form-outline mb-4">
 									<input type="email" id="typeEmailX-2"
-										class="form-control form-control-lg" name="customerEmail" /> <label
-										class="form-label" for="typeEmailX-2">Email</label>
+										class="form-control form-control-lg" name="customerEmail" />
+									<label class="form-label" for="typeEmailX-2">Email</label>
 								</div>
 
 								<div data-mdb-input-init class="form-outline mb-4">
@@ -58,6 +63,14 @@
 
 								<button data-mdb-button-init data-mdb-ripple-init
 									class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+
+								<div class="text-center text-lg-start mt-4 pt-2">
+
+									<p class="large fw-bold mt-2 pt-1 mb-0">
+										Don't have an account? <a href="customerRegister.jsp"
+											class="link-danger">Register</a>
+									</p>
+								</div>
 
 								<hr class="my-4">
 

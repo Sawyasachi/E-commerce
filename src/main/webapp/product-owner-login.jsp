@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,9 +17,9 @@
 	crossorigin="anonymous">
 </head>
 <body>
-	
+
 	<%
-		String msg = (String) request.getAttribute("msg");
+	String msg = (String) request.getAttribute("msg");
 	%>
 
 	<section class="vh-100" style="background-color: #508bfc;">
@@ -31,21 +31,27 @@
 						<div class="card-body p-5 text-center">
 
 							<h3 class="mb-5">Sign in</h3>
-							
-							<%if(msg != null) {%><h4><%=msg %></h4><%} %>
+
+							<%
+							if (msg != null) {
+							%><h4><%=msg%></h4>
+							<%
+							}
+							%>
 
 							<form action="loginProductOwner" method="post">
 
 								<div data-mdb-input-init class="form-outline mb-4">
 									<input type="email" id="typeEmailX-2"
-										class="form-control form-control-lg" name="productOwnerEmail" /> <label
-										class="form-label" for="typeEmailX-2">Email</label>
+										class="form-control form-control-lg" name="productOwnerEmail" />
+									<label class="form-label" for="typeEmailX-2">Email</label>
 								</div>
 
 								<div data-mdb-input-init class="form-outline mb-4">
 									<input type="password" id="typePasswordX-2"
-										class="form-control form-control-lg" name="productOwnerPassword" />
-									<label class="form-label" for="typePasswordX-2">Password</label>
+										class="form-control form-control-lg"
+										name="productOwnerPassword" /> <label class="form-label"
+										for="typePasswordX-2">Password</label>
 								</div>
 
 								<!-- Checkbox -->
@@ -57,6 +63,13 @@
 
 								<button data-mdb-button-init data-mdb-ripple-init
 									class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+
+								<div class="text-center text-lg-start mt-4 pt-2">
+
+									<p class="large fw-bold mt-2 pt-1 mb-0">
+										Don't have an account? <a href="product-owner-register.jsp" class="link-danger">Register</a>
+									</p>
+								</div>
 
 								<hr class="my-4">
 

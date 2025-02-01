@@ -15,6 +15,7 @@ public class ProductOwner {
 	private String productOwnerPassword;
 	private String productOwnerVerify;
 	
+	// for the sign-up
 	public ProductOwner(String productOwnerName, String productOwnerEmail, String productOwnerPassword) {
 		super();
 		this.productOwnerName = productOwnerName;
@@ -22,11 +23,25 @@ public class ProductOwner {
 		this.productOwnerPassword = productOwnerPassword;
 	}
 
+	// login
 	public ProductOwner(String productOwnerEmail, String productOwnerPassword) {
 		super();
 		this.productOwnerEmail = productOwnerEmail;
 		this.productOwnerPassword = productOwnerPassword;
 	}
+
+	//fetching details
+	public ProductOwner(int productOwnerId, String productOwnerName, String productOwnerEmail,
+			String productOwnerVerify) {
+		super();
+		this.productOwnerId = productOwnerId;
+		this.productOwnerName = productOwnerName;
+		this.productOwnerEmail = productOwnerEmail;
+		this.productOwnerVerify = productOwnerVerify;
+	}
+	
+	
+	
 	
 	
 	
