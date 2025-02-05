@@ -27,13 +27,14 @@ public class ProductOwnerLoginController extends HttpServlet {
 		ProductOwnerDao dao = new ProductOwnerDaoImpl();
 		
 		ProductOwner productOwner = dao.getProductOwnerByEmailDao(email);
+		System.out.println(productOwner);
 		
 		if(productOwner != null) {
 			
 			if(productOwner.getProductOwnerVerify().equalsIgnoreCase("yes")) {
 				
 				if(productOwner.getProductOwnerPassword().equals(password)) {
-					session.setAttribute("session", email);
+					session.setAttribute("session", productOwner);
 					req.getRequestDispatcher("Product-owner-home.jsp").forward(req, resp);
 				} else {
 					req.setAttribute("msg", "password is wrong....");

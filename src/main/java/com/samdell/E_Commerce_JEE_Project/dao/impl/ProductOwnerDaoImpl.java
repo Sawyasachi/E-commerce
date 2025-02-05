@@ -58,6 +58,8 @@ public class ProductOwnerDaoImpl implements ProductOwnerDao{
 			if(rs.next()) {
 				ProductOwner productOwner = new ProductOwner();
 				
+				productOwner.setProductOwnerId(rs.getInt("id"));
+				productOwner.setProductOwnerName(rs.getString("name"));
 				productOwner.setProductOwnerEmail(rs.getString("email"));
 				productOwner.setProductOwnerPassword(rs.getString("password"));
 				productOwner.setProductOwnerVerify(rs.getString("verify"));
