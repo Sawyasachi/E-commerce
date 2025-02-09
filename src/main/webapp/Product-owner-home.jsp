@@ -44,7 +44,7 @@
 	String msg = (String) request.getAttribute("msg");
 	ProductDao productDao = new ProductDaoImpl();
 
-	List<Product> products = productDao.displayAllProductDetailDao();
+	List<Product> products = productDao.getProductDetailByProductOwnerIdDao(productOwner.getProductOwnerId());
 	%>
 
 
@@ -55,14 +55,7 @@
 	<div class="container mt-4">
 		<h2 class="text-center">Product Owner Home</h2>
 
-		<%
-		if (msg != null) {
-		%>
 
-		<h4><%=msg%></h4>
-		<%
-		}
-		%>
 
 		<!-- Profile Card -->
 		<div class="profile-card bg-light">
@@ -82,9 +75,22 @@
 				data-bs-target="#updateProductOwnerDetail">
 				<i class="fa fa-edit"></i> Edit Profile
 			</button>
+			<button class="btn btn-danger" data-bs-toggle="modal"
+				data-bs-target="#updateProductOwnerDetail">
+				<i class="fa fa-edit"></i> Log-out
+			</button>
 		</div>
 
 		<hr>
+
+		<%
+		if (msg != null) {
+		%>
+
+		<h4 style="text-align: center"><%=msg%></h4>
+		<%
+		}
+		%>
 
 		<h3 class="text-center">Manage Products</h3>
 		<button class="btn btn-success mb-3" data-bs-toggle="modal"
@@ -99,6 +105,9 @@
 
 		<%
 		if (product != null) {
+
+			byte[] imageBytes = product.getProductImage();
+			String base64Image = Base64.getEncoder().encodeToString(imageBytes);
 		%>
 
 		<table class="table table-bordered table-striped">
@@ -116,9 +125,9 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td><img
-						src="DisplayImageController?id=<%=product.getProductId()%>"
-						class="img-thumbnail" alt="Product Image" name="id"></td>
+					<td><img src="data:image/jpeg;base64,<%=base64Image%>"
+						class="img-thumbnail" alt="Product Image" name="id" height="100px"
+						width="100px"></td>
 					<td><%=product.getProductId()%></td>
 					<td><%=product.getProductName()%></td>
 					<td><%=product.getProductColor()%></td>
@@ -126,17 +135,76 @@
 					<td>RS.<%=product.getProductPrice()%></td>
 					<td><%=product.getProductBrand()%></td>
 					<td>
-						<button class="btn btn-primary btn-sm btn-action">
+						<button class="btn btn-primary btn-sm btn-action"
+							data-bs-toggle="modal" data-bs-target="#updateProductModal">
 							<i class="fa fa-edit"></i> Edit
 						</button>
-						<button class="btn btn-danger btn-sm btn-action">
-							<i class="fa fa-trash"></i> Delete
-						</button>
+						<a href="deleteProduct?productId=<%=product.getProductId()%>">
+							<button class="btn btn-danger btn-sm btn-action">
+								<i class="fa fa-trash"></i> Delete
+							</button>
+						</a>
 					</td>
 				</tr>
 				<!-- More rows dynamically added -->
 			</tbody>
 		</table>
+		
+		
+		<!-- Update Product Modal -->
+	<div class="modal fade" id="updateProductModal" tabindex="-1"
+		aria-labelledby="addProductLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="updateProductDetail">update Product</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form action="updateProduct" method="post"
+						enctype="multipart/form-data">
+						<div class="mb-3">
+							<label class="form-label">Product Id</label> <input type="number"
+								class="form-control" placeholder="Enter product name" readonly value="<%= product.getProductId()%>"
+								name="name">
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Product Name</label> <input type="text"
+								class="form-control" placeholder="Enter product name" value="<%= product.getProductName()%>"
+								name="name">
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Product Color</label> <input
+								type="text" class="form-control" value="<%= product.getProductColor()%>"
+								placeholder="Enter product color" name="productColor">
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Product Quantity</label> <input
+								type="number" class="form-control" value="<%= product.getProductQuant()%>"
+								placeholder="Enter product quantity" name="productQuantity">
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Price</label> <input type="number" value="<%= product.getProductPrice()%>"
+								class="form-control" placeholder="Enter price" name="productPrice">
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Product brand</label> <input
+								type="text" class="form-control" value="<%= product.getProductBrand()%>"
+								placeholder="Enter product brand" name="productBrand">
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Upload Image</label> <input type="file"
+								class="form-control" name="productImage" value="<%= product.getProductImage()%>">
+						</div>
+						<input type="hidden" class="form-control" name="productOwnerId"
+							value="<%=productOwner.getProductOwnerId()%>">
+						<button type="submit" class="btn btn-success">Add</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 		<%
@@ -193,22 +261,25 @@
 								class="form-control" placeholder="Enter price" name="price">
 						</div>
 						<div class="mb-3">
-							<label class="form-label">Product brand</label> <input type="text"
-								class="form-control" placeholder="Enter product brand"
-								name="brand">
+							<label class="form-label">Product brand</label> <input
+								type="text" class="form-control"
+								placeholder="Enter product brand" name="brand">
 						</div>
 						<div class="mb-3">
 							<label class="form-label">Upload Image</label> <input type="file"
 								class="form-control" name="image">
 						</div>
-						<input type="hidden"
-								class="form-control" name="productOwnerId" value="<%= productOwner.getProductOwnerId()%>">
+						<input type="hidden" class="form-control" name="productOwnerId"
+							value="<%=productOwner.getProductOwnerId()%>">
 						<button type="submit" class="btn btn-success">Add</button>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
+
+
+	
 
 
 	<!-- Update Product Owner Detail Modal -->
@@ -227,7 +298,7 @@
 						<div class="mb-3">
 							<label class="form-label">Product Owner Id</label> <input
 								type="number" class="form-control"
-								value="<%=productOwner.getProductOwnerId()%>" readonly>
+								value="<%=productOwner.getProductOwnerId()%>" readonly name="id">
 						</div>
 						<div class="mb-3">
 							<label class="form-label">Product Owner Name</label> <input
@@ -236,7 +307,7 @@
 						</div>
 						<div class="mb-3">
 							<label class="form-label">Product Owner email</label> <input
-								type="number" class="form-control"
+								type="text" class="form-control"
 								value="<%=productOwner.getProductOwnerEmail()%>" name="email">
 						</div>
 						<button type="submit" class="btn btn-success">Update</button>
