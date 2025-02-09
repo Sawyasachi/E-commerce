@@ -10,6 +10,10 @@ public interface ProductDao {
 	
 	public List<Product> displayAllProductDetailDao();
 	
-	public Product getProductDetailByIdDao(int id);
+	public List<Product> getProductDetailByProductOwnerIdDao(int productOwnerId);
+	
+	public boolean deleteProductDetailDao(int proudctId);
+	
+	public Product updateProductDao(Product product);
 
 }

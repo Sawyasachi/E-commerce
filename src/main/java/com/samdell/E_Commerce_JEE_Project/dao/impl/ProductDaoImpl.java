@@ -14,12 +14,16 @@ import com.samdell.E_Commerce_JEE_Project.entity.Product;
 public class ProductDaoImpl implements ProductDao{
 	
 	Connection conn = ConnectionProvider.getConnection();
-	String insert_product_detail = "INSERT INTO product(productName,productColor,productQuantity,productPrice,productBrand,productImage,productOwnerId)"
+	final String insert_product_detail = "INSERT INTO product(productName,productColor,productQuantity,productPrice,productBrand,productImage,productOwnerId)"
 			+ " VALUES(?,?,?,?,?,?,?)";
 	
-	String display_all_product_detail = "SELECT * FROM product";
+	final String display_all_product_detail = "SELECT * FROM product";
 	
-	String get_product_detail_by_id = "SELECT * FROM WHERE id=?";
+	final String get_product_detail_by_ProductOwner_id = "SELECT * FROM product WHERE productOwnerId=?";
+	
+	final String delete_product_detail = "DELETE FROM product WHERE productId=?";
+	
+	final String update_product_detail = "UPDATE prodcut SET productName=?, productColor=?, productQuantity=?, productPrice=?, productBrand=?, productImage=? WHERE productId=?";
 
 	@Override
 	public Product saveProductDetailDao(Product product) {
@@ -81,16 +85,17 @@ public class ProductDaoImpl implements ProductDao{
 
 
 	@Override
-	public Product getProductDetailByIdDao(int id) {
+	public List<Product> getProductDetailByProductOwnerIdDao(int productOwnerId) {
 		try {
-			PreparedStatement ps = conn.prepareStatement(get_product_detail_by_id);
-			Product product = new Product();
+			List<Product> products = new ArrayList<Product>();
+			PreparedStatement ps = conn.prepareStatement(get_product_detail_by_ProductOwner_id);
 			
-			ps.setInt(1, id);
+			
+			ps.setInt(1, productOwnerId);
 			ResultSet rs = ps.executeQuery();
 			
-			if(rs.next()) {
-				
+			while(rs.next()) {
+				Product product = new Product();
 				
 				product.setProductId(rs.getInt("productId"));
 				product.setProductName(rs.getString("productName"));
@@ -99,15 +104,60 @@ public class ProductDaoImpl implements ProductDao{
 				product.setProductPrice(rs.getDouble("productPrice"));
 				product.setProductBrand(rs.getString("productBrand"));
 				product.setProductImage(rs.getBytes("productImage"));
-				
+//				System.out.println(product);
+				products.add(product);
 			}
 			
-			return product != null ? product : null;
+			return products != null ? products : null;
 		} catch (SQLException e) {
-			
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+
+
+	@Override
+	public boolean deleteProductDetailDao(int proudctId) {
+		try {
+			PreparedStatement ps = conn.prepareStatement(delete_product_detail);
+			
+			ps.setInt(1, proudctId);
+			
+			int a = ps.executeUpdate();
+			
+			return a != 0 ? true : false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+
+
+	@Override
+	public Product updateProductDao(Product product) {
+		try {
+			PreparedStatement ps = conn.prepareStatement(update_product_detail);
+			
+			ps.setString(1, product.getProductName());
+			ps.setString(2, product.getProductColor());
+			ps.setInt(3, product.getProductQuant());
+			ps.setDouble(4, product.getProductPrice());
+			ps.setString(5, product.getProductBrand());
+			ps.setBytes(6, product.getProductImage());
+			
+			ps.setInt(7, product.getProductId());
+			
+			
+			int a = ps.executeUpdate();
+			
+			return a != 0 ? product : null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 
 }

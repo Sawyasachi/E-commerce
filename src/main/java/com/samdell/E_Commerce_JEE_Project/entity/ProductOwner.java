@@ -39,6 +39,13 @@ public class ProductOwner {
 		this.productOwnerEmail = productOwnerEmail;
 		this.productOwnerVerify = productOwnerVerify;
 	}
+
+	public ProductOwner(int productOwnerId, String productOwnerName, String productOwnerEmail) {
+		super();
+		this.productOwnerId = productOwnerId;
+		this.productOwnerName = productOwnerName;
+		this.productOwnerEmail = productOwnerEmail;
+	}
 	
 	
 	

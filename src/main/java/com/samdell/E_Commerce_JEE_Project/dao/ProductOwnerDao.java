@@ -17,5 +17,7 @@ public interface ProductOwnerDao {
 	
 	public boolean verifyProductOwnerDao(int id);
 	public boolean unVerifiedProductOwnerDao(int id);
+	
+	public boolean updateProductOwnerDetail(ProductOwner productOwner);
 
 }
